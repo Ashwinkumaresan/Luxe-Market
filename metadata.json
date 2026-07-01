@@ -1,0 +1,6 @@
+{
+  "name": "Luxe Market",
+  "description": "A premium e-commerce marketplace featuring luxury goods, immersive design, interactive filters, smart shopping assistants, and highly polished responsive checkouts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
