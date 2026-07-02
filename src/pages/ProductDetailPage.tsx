@@ -8,6 +8,7 @@ import {
 import { motion, AnimatePresence } from "motion/react";
 import { Product, CartItem, Review } from "../types";
 import { PRODUCTS } from "../data/products";
+import ProductSummaryAssistant from "../components/ProductSummaryAssistant";
 
 const PRODUCT_IMAGES_MAP: Record<string, string[]> = {
   "elec-1": [
@@ -1354,6 +1355,9 @@ export default function ProductDetailView({
           </>
         )}
       </AnimatePresence>
+
+      {/* AI-powered Product Summary Assistant */}
+      <ProductSummaryAssistant product={product} />
 
     </div>
   );
