@@ -40,7 +40,7 @@ const ProductCardEmbed = ({ id, label, onClick }: { id: string; label: string; o
   }
 
   return (
-    <div className="flex flex-col gap-2.5 p-3.5 my-2.5 rounded-xl bg-white border border-slate-100/80 shadow-xs hover:shadow-md hover:border-slate-200 transition-all group w-full max-w-full sm:max-w-[300px] box-border">
+    <div className="flex flex-col gap-2.5 p-3.5 my-2.5 rounded-xl bg-white border border-slate-100/80 shadow-xs hover:shadow-md hover:border-slate-200 transition-all group w-full max-w-full sm:max-w-[300px] box-border min-w-0">
       <div className="flex gap-3 items-center">
         <img 
           src={product.image} 
@@ -159,18 +159,18 @@ const MessageContent = ({ text, onProductClick }: { text: string; onProductClick
     if (bulletMatch) {
       const content = bulletMatch[2];
       currentListItems.push(
-        <li key={`li-${index}`} className="flex items-start gap-2 text-sm text-slate-700 leading-relaxed">
+        <li key={`li-${index}`} className="flex items-start gap-2 text-sm text-slate-700 leading-relaxed min-w-0">
           <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0 mt-2.5" />
-          <div className="flex-1">{parseInlineFormatting(content, onProductClick)}</div>
+          <div className="flex-1 min-w-0">{parseInlineFormatting(content, onProductClick)}</div>
         </li>
       );
     } else if (numberMatch) {
       const num = numberMatch[1];
       const content = numberMatch[2];
       currentListItems.push(
-        <li key={`li-${index}`} className="flex items-start gap-2 text-sm text-slate-700 leading-relaxed">
+        <li key={`li-${index}`} className="flex items-start gap-2 text-sm text-slate-700 leading-relaxed min-w-0">
           <span className="font-bold text-xs text-amber-600 shrink-0 mt-0.5 w-4 text-right">{num}.</span>
-          <div className="flex-1">{parseInlineFormatting(content, onProductClick)}</div>
+          <div className="flex-1 min-w-0">{parseInlineFormatting(content, onProductClick)}</div>
         </li>
       );
     } else {
@@ -189,7 +189,7 @@ const MessageContent = ({ text, onProductClick }: { text: string; onProductClick
   });
 
   flushList(lines.length);
-  return <div className="space-y-1">{renderedElements}</div>;
+  return <div className="space-y-1 w-full min-w-0">{renderedElements}</div>;
 };
 
 export default function AIChatbot({

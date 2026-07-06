@@ -343,6 +343,29 @@ export default function ProductSummaryAssistant({ product }: ProductSummaryAssis
   const [isLoading, setIsLoading] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
   const [showTooltip, setShowTooltip] = useState(false);
+  const [isPreprocessing, setIsPreprocessing] = useState(false);
+  const [preprocessingStep, setPreprocessingStep] = useState(0);
+
+  const preprocessingSteps = [
+    "Reading catalog specifications...",
+    "Analyzing verified buyer reviews...",
+    "Calculating Luxe Value Index...",
+    "Formulating AI Product intelligence..."
+  ];
+
+  // Cycle through preprocessing steps
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isPreprocessing) {
+      setPreprocessingStep(0);
+      interval = setInterval(() => {
+        setPreprocessingStep((prev) => (prev < preprocessingSteps.length - 1 ? prev + 1 : prev));
+      }, 700);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isPreprocessing]);
 
   // Store chat history mapping: productId -> Message[]
   const [sessionHistories, setSessionHistories] = useState<{ [pId: string]: Message[] }>({});
@@ -383,13 +406,14 @@ export default function ProductSummaryAssistant({ product }: ProductSummaryAssis
 
   // Auto trigger summary generation when chatbot is opened for the first time on a product
   const handleOpenAssistant = () => {
-    setIsOpen(true);
-    setIsMinimized(false);
     setShowTooltip(false);
 
     if (activeMessages.length === 0) {
+      setIsPreprocessing(true);
       triggerAutomaticSummary();
     } else {
+      setIsOpen(true);
+      setIsMinimized(false);
       setTimeout(() => {
         inputRef.current?.focus();
       }, 100);
@@ -476,6 +500,11 @@ export default function ProductSummaryAssistant({ product }: ProductSummaryAssis
       }));
     } finally {
       setIsLoading(false);
+      setIsPreprocessing(false);
+      if (isAutoSummary) {
+        setIsOpen(true);
+        setIsMinimized(false);
+      }
       setTimeout(() => {
         inputRef.current?.focus();
       }, 50);
@@ -493,47 +522,253 @@ export default function ProductSummaryAssistant({ product }: ProductSummaryAssis
 
   return (
     <>
-      {/* Floating Action Button (Pulse animation + Bolt Icon) */}
-      <div 
-        className="fixed bottom-24 right-4 z-50 flex flex-col items-end sm:right-6" 
-        id="prod-summary-assistant-launcher-container"
-      >
-        <AnimatePresence>
-          {showTooltip && !isOpen && (
+      {/* 1/3 Blur Preprocessing Sparkle Loading Overlay */}
+      <AnimatePresence>
+        {isPreprocessing && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-slate-950/20 backdrop-blur-[10px] overflow-hidden pointer-events-none"
+          >
+            {/* Ambient Glowing Orbs drifting around */}
             <motion.div
-              initial={{ opacity: 0, y: 10, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="mb-2 bg-slate-900 text-white font-sans text-[11px] font-bold px-3 py-2 rounded-lg shadow-lg border border-slate-800 flex flex-col tracking-wide select-none whitespace-nowrap"
-            >
-              <div className="flex items-center gap-1 text-amber-400">
-                <Zap className="w-3 h-3 fill-amber-400 shrink-0" />
-                <span>AI Product Summary</span>
-              </div>
-              <span className="text-[10px] text-gray-400 font-medium">Summarize this product</span>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              animate={{
+                x: [100, 300, 50, 100],
+                y: [100, 50, 250, 100],
+                scale: [1, 1.3, 0.9, 1],
+                opacity: [0.3, 0.6, 0.4, 0.3],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="absolute w-[250px] h-[250px] sm:w-[350px] sm:h-[350px] rounded-full bg-white/10 blur-[80px]"
+            />
 
-        <motion.button
-          onClick={isOpen ? () => setIsOpen(false) : handleOpenAssistant}
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.95 }}
-          className={`relative w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shadow-xl border cursor-pointer transition-all duration-300 ${
-            isOpen 
-              ? "bg-slate-950 border-slate-900 text-white" 
-              : "bg-amber-500 border-amber-400 text-white hover:bg-amber-600 hover:border-amber-500 animate-pulse-subtle"
-          }`}
-          title="AI Product Concierge"
-          id="prod-summary-assistant-btn"
+            <motion.div
+              animate={{
+                x: [400, 100, 300, 400],
+                y: [300, 500, 100, 300],
+                scale: [1.2, 0.8, 1.1, 1.2],
+                opacity: [0.2, 0.5, 0.3, 0.2],
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="absolute w-[300px] h-[300px] sm:w-[450px] sm:h-[450px] rounded-full bg-white/8 blur-[100px]"
+            />
+
+            <motion.div
+              animate={{
+                x: [50, 400, 150, 50],
+                y: [500, 200, 400, 500],
+                scale: [0.9, 1.2, 1, 0.9],
+                opacity: [0.15, 0.4, 0.25, 0.15],
+              }}
+              transition={{
+                duration: 9,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="absolute w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] rounded-full bg-white/5 blur-[70px]"
+            />
+
+            {/* Scattered Shimmering Sparkles at different areas */}
+            {/* Sparkle 1 */}
+            <motion.div
+              style={{ top: "15%", left: "20%" }}
+              animate={{
+                scale: [0.4, 1.5, 0.4],
+                opacity: [0.1, 0.9, 0.1],
+                rotate: [0, 90, 180],
+              }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="absolute text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]"
+            >
+              <Sparkles className="w-8 h-8 fill-white/80" />
+            </motion.div>
+
+            {/* Sparkle 2 */}
+            <motion.div
+              style={{ top: "45%", left: "75%" }}
+              animate={{
+                scale: [0.3, 1.2, 0.3],
+                opacity: [0.1, 0.8, 0.1],
+                rotate: [0, -90, -180],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.5,
+              }}
+              className="absolute text-white/90 drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]"
+            >
+              <Sparkles className="w-6 h-6 fill-white/60" />
+            </motion.div>
+
+            {/* Sparkle 3 */}
+            <motion.div
+              style={{ top: "75%", left: "30%" }}
+              animate={{
+                scale: [0.5, 1.6, 0.5],
+                opacity: [0.2, 1, 0.2],
+                rotate: [0, 120, 240],
+              }}
+              transition={{
+                duration: 2.8,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.8,
+              }}
+              className="absolute text-white/80 drop-shadow-[0_0_12px_rgba(255,255,255,0.7)]"
+            >
+              <Sparkles className="w-7 h-7 fill-white/70" />
+            </motion.div>
+
+            {/* Sparkle 4 */}
+            <motion.div
+              style={{ top: "25%", left: "65%" }}
+              animate={{
+                scale: [0.3, 1.1, 0.3],
+                opacity: [0.1, 0.7, 0.1],
+                rotate: [0, 60, 120],
+              }}
+              transition={{
+                duration: 2.2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1.2,
+              }}
+              className="absolute text-white/70 drop-shadow-[0_0_6px_rgba(255,255,255,0.5)]"
+            >
+              <Sparkles className="w-5 h-5 fill-white/50" />
+            </motion.div>
+
+            {/* Sparkle 5 */}
+            <motion.div
+              style={{ top: "60%", left: "15%" }}
+              animate={{
+                scale: [0.4, 1.3, 0.4],
+                opacity: [0.2, 0.9, 0.2],
+                rotate: [0, -45, -90],
+              }}
+              transition={{
+                duration: 3.2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.3,
+              }}
+              className="absolute text-white/90 drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]"
+            >
+              <Sparkles className="w-6 h-6 fill-white/70" />
+            </motion.div>
+
+            {/* Sparkle 6 */}
+            <motion.div
+              style={{ top: "80%", left: "80%" }}
+              animate={{
+                scale: [0.3, 1.4, 0.3],
+                opacity: [0.1, 0.85, 0.1],
+                rotate: [0, 180, 360],
+              }}
+              transition={{
+                duration: 2.6,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1.5,
+              }}
+              className="absolute text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]"
+            >
+              <Sparkles className="w-6 h-6 fill-white/80" />
+            </motion.div>
+
+            {/* Sparkle 7 */}
+            <motion.div
+              style={{ top: "10%", left: "85%" }}
+              animate={{
+                scale: [0.2, 1, 0.2],
+                opacity: [0.1, 0.75, 0.1],
+                rotate: [0, -180, -360],
+              }}
+              transition={{
+                duration: 3.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.9,
+              }}
+              className="absolute text-white/60 drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]"
+            >
+              <Sparkles className="w-4 h-4 fill-white/40" />
+            </motion.div>
+
+            {/* Shifting background shine/spark lines */}
+            <motion.div
+              animate={{
+                opacity: [0.1, 0.3, 0.1],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Floating Action Button (Pulse animation + Bolt Icon) */}
+      {!isPreprocessing && (
+        <div 
+          className="fixed bottom-24 right-4 z-50 flex flex-col items-end sm:right-6" 
+          id="prod-summary-assistant-launcher-container"
         >
-          {isOpen ? (
-            <X className="w-5 h-5" />
-          ) : (
-            <Zap className="w-5 h-5 fill-white animate-bounce-subtle" />
-          )}
-        </motion.button>
-      </div>
+          <AnimatePresence>
+            {showTooltip && !isOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="mb-2 bg-slate-900 text-white font-sans text-[11px] font-bold px-3 py-2 rounded-lg shadow-lg border border-slate-800 flex flex-col tracking-wide select-none whitespace-nowrap"
+              >
+                <div className="flex items-center gap-1 text-amber-400">
+                  <Zap className="w-3 h-3 fill-amber-400 shrink-0" />
+                  <span>AI Product Summary</span>
+                </div>
+                <span className="text-[10px] text-gray-400 font-medium">Summarize this product</span>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <motion.button
+            onClick={isOpen ? () => setIsOpen(false) : handleOpenAssistant}
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+            className={`relative w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shadow-xl border cursor-pointer transition-all duration-300 ${
+              isOpen 
+                ? "bg-slate-950 border-slate-900 text-white" 
+                : "bg-amber-500 border-amber-400 text-white hover:bg-amber-600 hover:border-amber-500 animate-pulse-subtle"
+            }`}
+            title="AI Product Concierge"
+            id="prod-summary-assistant-btn"
+          >
+            {isOpen ? (
+              <X className="w-5 h-5" />
+            ) : (
+              <Zap className="w-5 h-5 fill-white animate-bounce-subtle" />
+            )}
+          </motion.button>
+        </div>
+      )}
 
       {/* Adaptive Backdrop for focus (visible on mobile and tablet, hidden on desktop to allow page browsing) */}
       <AnimatePresence>
@@ -735,10 +970,12 @@ export default function ProductSummaryAssistant({ product }: ProductSummaryAssis
                 {activeMessages.length > 0 && (
                   <button
                     onClick={() => {
+                      setIsOpen(false);
                       setSessionHistories((prev) => ({
                         ...prev,
                         [product.id]: []
                       }));
+                      setIsPreprocessing(true);
                       setTimeout(() => triggerAutomaticSummary(), 100);
                     }}
                     className="text-[9px] text-gray-400 hover:text-amber-600 transition-colors font-semibold uppercase tracking-wider cursor-pointer flex items-center gap-1"
