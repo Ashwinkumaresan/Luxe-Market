@@ -648,6 +648,184 @@ export const PRODUCTS: Product[] = [
     reviews: [
       { id: "rev-am90-1", author: "Robert M.", rating: 5, date: "May 29, 2026", comment: "Keeps my feet perfectly dry in rainy Seattle weather. Still has that classic Air Max 90 shape.", helpfulCount: 14 }
     ]
+  },
+  {
+    id: "elec-5",
+    name: "Aether Retro Walnut Radio & Speaker",
+    description: "Vintage aesthetics paired with modern acoustic fidelity. Crafted with an authentic walnut wood cabinet and physical brass controls, this speaker delivers clean FM tuning alongside high-performance Bluetooth streaming.",
+    price: 149.00,
+    rating: 4.7,
+    reviewsCount: 38,
+    category: "Electronics",
+    subcategory: "Audio",
+    brand: "Aether",
+    image: "https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=800&q=80",
+    stock: 16,
+    ecoFriendly: true,
+    points: 75,
+    specs: [
+      { label: "Chassis", value: "Handcrafted American Walnut Cabinet" },
+      { label: "Connectivity", value: "Bluetooth 5.1 / FM Radio / 3.5mm Aux" },
+      { label: "Battery Life", value: "Up to 24 Hours Rechargeable" },
+      { label: "Acoustics", value: "Dual 15W Full-Range Drivers with Bass Port" }
+    ],
+    colors: [
+      { name: "Walnut & Gold", hex: "#7c2d12" }
+    ],
+    reviews: [
+      { id: "rev-e5-1", author: "Evelyn T.", rating: 5, date: "June 18, 2026", comment: "Very warm acoustic tone. Looks incredibly charming on my bedside table. Tuner is highly selective and clear.", helpfulCount: 11 }
+    ]
+  },
+  {
+    id: "fash-4",
+    name: "Vellum Field Waxed Canvas Jacket",
+    description: "A heritage weather-resistant field jacket. Constructed from heavy organic cotton canvas saturated with traditional beeswax, trimmed with luxurious British corduroy on the collar and cuffs, and lined in lightweight wool flannel.",
+    price: 310.00,
+    rating: 4.8,
+    reviewsCount: 41,
+    category: "Fashion",
+    subcategory: "Outerwear",
+    brand: "Vellum",
+    image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80",
+    stock: 12,
+    ecoFriendly: true,
+    points: 155,
+    specs: [
+      { label: "Material", value: "100% Organic Beeswax-Saturated Canvas" },
+      { label: "Lining", value: "100% Lightweight Merino Wool Flannel" },
+      { label: "Details", value: "Solid Brass Snap Closures & Corduroy Trim" },
+      { label: "Water Resistance", value: "Shedding Water and Wind repellent" }
+    ],
+    colors: [
+      { name: "Field Olive", hex: "#3f6212" },
+      { name: "Oak Brown", hex: "#78350f" }
+    ],
+    reviews: [
+      { id: "rev-f4-1", author: "Gavin P.", rating: 5, date: "May 30, 2026", comment: "Built like a tank. Keeps the wind and rain completely out. Fits exceptionally well and has pockets for everything.", helpfulCount: 9 }
+    ]
+  },
+  {
+    id: "book-1",
+    name: "Vellum Heirloom Leather Journal",
+    description: "An exquisite lay-flat journal handcrafted from full-grain vegetable-tanned Tuscan leather. Features 240 pages of ultra-smooth, heavy 120gsm fountain-pen-friendly archival cream paper, complete with hand-sewn binding and a brass clasp closure.",
+    price: 65.00,
+    rating: 4.9,
+    reviewsCount: 42,
+    category: "Books & Stationery",
+    subcategory: "Notebooks",
+    brand: "Vellum",
+    image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80",
+    stock: 14,
+    ecoFriendly: true,
+    points: 30,
+    isBestSeller: true,
+    specs: [
+      { label: "Paper", value: "120 gsm Archival Cream (Acid-Free)" },
+      { label: "Page Count", value: "240 Pages (Dotted Grid)" },
+      { label: "Cover Leather", value: "Tuscan Vegetable-Tanned Cowhide" },
+      { label: "Binding", value: "Smyth Sewn (180° Lay-Flat)" },
+      { label: "Size", value: "A5 (148mm x 210mm)" }
+    ],
+    colors: [
+      { name: "Chestnut Brown", hex: "#7c2d12" },
+      { name: "Forest Green", hex: "#064e3b" },
+      { name: "Ink Black", hex: "#18181b" }
+    ],
+    reviews: [
+      { id: "rev-b1-1", author: "Arthur M.", rating: 5, date: "June 12, 2026", comment: "No feathering or bleeding even with my wettest fountain pens. The leather cover smells beautiful and will age gracefully.", helpfulCount: 15 }
+    ]
+  },
+  {
+    id: "book-2",
+    name: "Chronicle Brass Fountain Pen",
+    description: "Machined from a solid block of C360 eco-brass, the Chronicle Fountain Pen features a custom-engineered 14k gold-plated German nib. Its weighted barrel is perfectly balanced for hand fatigue-free writing, developing a brilliant personal patina over time.",
+    price: 125.00,
+    originalPrice: 150.00,
+    rating: 4.8,
+    reviewsCount: 29,
+    category: "Books & Stationery",
+    subcategory: "Pens",
+    brand: "Chronicle",
+    image: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=800&q=80",
+    stock: 9,
+    ecoFriendly: true,
+    points: 60,
+    discount: 16,
+    specs: [
+      { label: "Material", value: "Solid C360 Lead-Free Eco-Brass" },
+      { label: "Nib", value: "#5 Schmidt 14k Gold-Plated (Fine)" },
+      { label: "Filling System", value: "Standard International Cartridge/Converter" },
+      { label: "Length/Weight", value: "135mm / 42g (Capped)" }
+    ],
+    colors: [
+      { name: "Raw Brass", hex: "#ca8a04" },
+      { name: "Obsidian Black & Gold", hex: "#111111" }
+    ],
+    reviews: [
+      { id: "rev-b2-1", author: "Clara G.", rating: 5, date: "May 25, 2026", comment: "The weight is sublime. Ink flows smoothly without skipping. It has instantly become my everyday writer.", helpfulCount: 8 }
+    ]
+  },
+  {
+    id: "kit-1",
+    name: "Solis Precision Espresso Grinder",
+    description: "Uncompromised grinding precision. Engineered with 64mm flat titanium burrs and an exceptionally quiet high-torque motor, this stepless grinder achieves micron-level particle consistency for rich, full-bodied espresso pulls.",
+    price: 380.00,
+    originalPrice: 420.00,
+    rating: 4.9,
+    reviewsCount: 51,
+    category: "Kitchen & Dining",
+    subcategory: "Coffee",
+    brand: "Solis",
+    image: "https://images.unsplash.com/photo-1579888944880-d98341148733?auto=format&fit=crop&w=800&q=80",
+    stock: 6,
+    ecoFriendly: false,
+    points: 190,
+    discount: 10,
+    specs: [
+      { label: "Burr Set", value: "64mm Flat DLC-Coated Titanium Burrs" },
+      { label: "Adjustment", value: "Stepless Micrometer Control" },
+      { label: "Motor Speed", value: "1400 RPM High-Torque AC" },
+      { label: "Hopper Capacity", value: "250g Single-Dose Bellows Included" },
+      { label: "Dosing", value: "Low Retention (less than 0.1g)" }
+    ],
+    colors: [
+      { name: "Matte Black", hex: "#18181b" },
+      { name: "Chalk White", hex: "#f4f4f5" }
+    ],
+    reviews: [
+      { id: "rev-k1-1", author: "Marcello V.", rating: 5, date: "July 01, 2026", comment: "Extremely quiet and zero retention. My espresso shots are perfectly consistent now. Pure engineering delight.", helpfulCount: 23 }
+    ]
+  },
+  {
+    id: "kit-2",
+    name: "Vesta Enameled Cast Iron Dutch Oven",
+    description: "An heirloom piece for the modern kitchen. Double-enameled in beautiful rich gradients, this heavy cast iron dutch oven offers superior heat distribution and exceptional moisture retention for slow-braised stews, bread baking, and roasting.",
+    price: 210.00,
+    rating: 4.8,
+    reviewsCount: 64,
+    category: "Kitchen & Dining",
+    subcategory: "Cookware",
+    brand: "Vesta",
+    image: "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80",
+    stock: 11,
+    ecoFriendly: true,
+    points: 105,
+    isBestSeller: true,
+    specs: [
+      { label: "Capacity", value: "5.5 Quarts (5.2 Liters)" },
+      { label: "Material", value: "Cast Iron with Double Sand-Grit Enamel Coating" },
+      { label: "Heat Limit", value: "Safe up to 500°F (260°C) in Oven" },
+      { label: "Weight", value: "11.4 lbs (5.2 kg) with Lid" },
+      { label: "Compatibility", value: "Gas, Electric, Ceramic, Induction Compatible" }
+    ],
+    colors: [
+      { name: "Crimson Red", hex: "#991b1b" },
+      { name: "Sage Green", hex: "#3f6212" },
+      { name: "Ink Black", hex: "#18181b" }
+    ],
+    reviews: [
+      { id: "rev-k2-1", author: "Sarah B.", rating: 5, date: "June 20, 2026", comment: "Bakes sourdough bread incredibly with a perfect crispy crust. Cleanup is a breeze. It's beautiful on my stove.", helpfulCount: 19 }
+    ]
   }
 ];
 
@@ -656,7 +834,9 @@ export const CATEGORIES = [
   "Fashion",
   "Home",
   "Beauty",
-  "Sports"
+  "Sports",
+  "Books & Stationery",
+  "Kitchen & Dining"
 ];
 
 export const BRANDS_BY_CATEGORY: Record<string, string[]> = {
@@ -664,7 +844,9 @@ export const BRANDS_BY_CATEGORY: Record<string, string[]> = {
   "Fashion": ["Vellum", "Solis", "Terra", "Aether", "Nike"],
   "Home": ["Lumina", "Solis", "Vellum", "Terra"],
   "Beauty": ["Aurum", "Aether", "Terra"],
-  "Sports": ["Solis", "Terra", "Aether", "Nike"]
+  "Sports": ["Solis", "Terra", "Aether", "Nike"],
+  "Books & Stationery": ["Vellum", "Lumina", "Chronicle"],
+  "Kitchen & Dining": ["Aether", "Solis", "Terra", "Vesta"]
 };
 
 export const SUBCATEGORIES_BY_CATEGORY: Record<string, string[]> = {
@@ -672,5 +854,7 @@ export const SUBCATEGORIES_BY_CATEGORY: Record<string, string[]> = {
   "Fashion": ["Outerwear", "Shoes", "Bags", "Accessories"],
   "Home": ["Lighting", "Decor"],
   "Beauty": ["Skincare", "Fragrance"],
-  "Sports": ["Equipment", "Bags", "Accessories", "Shoes"]
+  "Sports": ["Equipment", "Bags", "Accessories", "Shoes"],
+  "Books & Stationery": ["Notebooks", "Pens", "Reading"],
+  "Kitchen & Dining": ["Cookware", "Coffee", "Tableware"]
 };

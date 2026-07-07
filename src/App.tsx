@@ -23,7 +23,7 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 import { WISHLIST_SEED_PRODUCTS } from "./data/wishlistSeed";
 
 const INITIAL_FILTERS: FilterState = {
-  category: "Electronics",
+  category: "Recommended",
   subcategory: [],
   priceRange: [0, 2500],
   brands: [],
@@ -77,6 +77,7 @@ function ProductDetailRoute({
 }: ProductDetailRouteProps) {
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const product = [...PRODUCTS, ...WISHLIST_SEED_PRODUCTS].find((p) => p.id === productId);
 
   if (!product) {
@@ -102,7 +103,7 @@ function ProductDetailRoute({
       wishlist={wishlist}
       onBuyNow={(prod, color, qty, size) => {
         if (!userProfile) {
-          navigate("/signin");
+          navigate("/signin", { state: { from: location.pathname } });
           return;
         }
         setCheckoutItems([{ product: prod, selectedColor: color, quantity: qty, selectedSize: size }]);
@@ -114,10 +115,10 @@ function ProductDetailRoute({
 
 export default function App() {
   const location = useLocation();
-  const [activeCategory, setActiveCategory] = useState<string>("Electronics");
+  const [activeCategory, setActiveCategory] = useState<string>("Recommended");
   const [filters, setFilters] = useState<FilterState>({
-    ...INITIAL_FILTERS,
-    category: "Electronics"
+     ...INITIAL_FILTERS,
+     category: "Recommended"
   });
   const [searchText, setSearchText] = useState<string>("");
   const [sortType, setSortType] = useState<"recommended" | "price-asc" | "price-desc" | "rating-desc">("recommended");
@@ -176,7 +177,7 @@ export default function App() {
   // Cart operations
   const handleAddToCart = (product: Product, selectedColor: string, qty: number = 1, selectedSize?: string) => {
     if (!userProfile) {
-      navigate("/signin");
+      navigate("/signin", { state: { from: location.pathname } });
       return;
     }
     setCart((prev) => {
@@ -247,7 +248,7 @@ export default function App() {
   // Wishlist operations
   const handleToggleWishlist = (product: Product) => {
     if (!userProfile) {
-      navigate("/signin");
+      navigate("/signin", { state: { from: location.pathname } });
       return;
     }
     setWishlist((prev) => {
@@ -421,7 +422,7 @@ export default function App() {
               onToggleWishlist={handleToggleWishlist}
               onCartClick={() => {
                 if (!userProfile) {
-                  navigate("/signin");
+                  navigate("/signin", { state: { from: location.pathname } });
                 } else {
                   navigate("/cart");
                 }
@@ -431,7 +432,7 @@ export default function App() {
                 if (userProfile) {
                   setProfileOpen(true);
                 } else {
-                  navigate("/signin");
+                  navigate("/signin", { state: { from: location.pathname } });
                 }
               }}
               onProductSelect={(product) => {
@@ -449,10 +450,11 @@ export default function App() {
               onBackToCatalog={() => navigate("/")}
               onAuthSuccess={(profile) => {
                 setUserProfile(profile);
-                navigate("/");
+                const redirectPath = location.state?.from || "/";
+                navigate(redirectPath);
                 setProfileOpen(true);
               }}
-              onNavigateToSignUp={() => navigate("/signup")}
+              onNavigateToSignUp={() => navigate("/signup", { state: location.state })}
             />
           }
         />
@@ -465,10 +467,11 @@ export default function App() {
               onBackToCatalog={() => navigate("/")}
               onAuthSuccess={(profile) => {
                 setUserProfile(profile);
-                navigate("/");
+                const redirectPath = location.state?.from || "/";
+                navigate(redirectPath);
                 setProfileOpen(true);
               }}
-              onNavigateToSignIn={() => navigate("/signin")}
+              onNavigateToSignIn={() => navigate("/signin", { state: location.state })}
             />
           }
         />
@@ -518,7 +521,7 @@ export default function App() {
               onProfileClick={() => setProfileOpen(true)}
               onCartClick={() => {
                 if (!userProfile) {
-                  navigate("/signin");
+                  navigate("/signin", { state: { from: location.pathname } });
                 } else {
                   navigate("/cart");
                 }

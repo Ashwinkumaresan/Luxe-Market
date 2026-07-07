@@ -397,6 +397,7 @@ export default function ProductDetailModal({
                           src={rel.image}
                           alt={rel.name}
                           className="w-10 h-10 object-cover rounded-lg bg-white shrink-0"
+                          referrerPolicy="no-referrer"
                         />
                         <div className="min-w-0">
                           <div className="text-xs font-semibold text-slate-900 truncate">{rel.name}</div>

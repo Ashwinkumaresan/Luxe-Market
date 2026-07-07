@@ -595,10 +595,10 @@ export default function CartPage({
                   
                   {/* Payment Card Badges */}
                   <div className="flex items-center justify-center gap-3.5 opacity-40 grayscale" id="payment-badges">
-                    <img src="https://cdn-icons-png.flaticon.com/128/349/349221.png" alt="Visa" className="h-4 object-contain" />
-                    <img src="https://cdn-icons-png.flaticon.com/128/349/349228.png" alt="MasterCard" className="h-4 object-contain" />
-                    <img src="https://cdn-icons-png.flaticon.com/128/349/349230.png" alt="Amex" className="h-4 object-contain" />
-                    <img src="https://cdn-icons-png.flaticon.com/128/196/196565.png" alt="Paypal" className="h-4 object-contain" />
+                    <img src="https://cdn-icons-png.flaticon.com/128/349/349221.png" alt="Visa" className="h-4 object-contain" referrerPolicy="no-referrer" />
+                    <img src="https://cdn-icons-png.flaticon.com/128/349/349228.png" alt="MasterCard" className="h-4 object-contain" referrerPolicy="no-referrer" />
+                    <img src="https://cdn-icons-png.flaticon.com/128/349/349230.png" alt="Amex" className="h-4 object-contain" referrerPolicy="no-referrer" />
+                    <img src="https://cdn-icons-png.flaticon.com/128/196/196565.png" alt="Paypal" className="h-4 object-contain" referrerPolicy="no-referrer" />
                   </div>
                 </div>
 

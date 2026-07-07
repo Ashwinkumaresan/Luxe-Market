@@ -1,10 +1,46 @@
-import React from "react";
-import { ChevronRight, SlidersHorizontal, RotateCcw } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { ChevronRight, SlidersHorizontal, RotateCcw, Star, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { Product, FilterState, UserProfile } from "../types";
 import Header from "../components/Header";
 import FiltersSidebar from "../components/FiltersSidebar";
 import ProductCard from "../components/ProductCard";
+
+const ProductSkeleton = () => (
+  <div className="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm flex flex-col h-full animate-pulse">
+    {/* Image container skeleton */}
+    <div className="w-full aspect-[4/3] bg-gray-100" />
+    
+    {/* Content Area skeleton */}
+    <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+      <div>
+        {/* Rating and eco skeleton */}
+        <div className="flex items-center gap-1.5 mb-2.5">
+          <Star className="w-3.5 h-3.5 text-gray-200 fill-gray-200" />
+          <div className="w-8 h-3.5 bg-gray-100 rounded" />
+          <div className="w-12 h-3.5 bg-gray-50 rounded" />
+          <div className="ml-auto w-12 h-4.5 bg-emerald-50 rounded-md" />
+        </div>
+        
+        {/* Title skeleton */}
+        <div className="h-4.5 bg-gray-100 rounded-md w-11/12 mb-2.5" />
+        <div className="h-4.5 bg-gray-100 rounded-md w-2/3 mb-4" />
+        
+        {/* Price skeleton */}
+        <div className="flex items-baseline gap-2 mb-2">
+          <div className="h-6 bg-gray-100 rounded-md w-16" />
+          <div className="h-4 bg-gray-50 rounded-md w-12" />
+        </div>
+      </div>
+      
+      {/* Button/Points skeleton */}
+      <div className="pt-3 border-t border-gray-50 flex items-center justify-between">
+        <div className="w-16 h-3.5 bg-gray-100 rounded" />
+        <div className="w-24 h-8 bg-gray-100 rounded-lg" />
+      </div>
+    </div>
+  </div>
+);
 
 interface CatalogPageProps {
   activeCategory: string;
@@ -55,6 +91,32 @@ export default function CatalogPage({
   onProfileClick,
   onProductSelect
 }: CatalogPageProps) {
+  const [prevCategory, setPrevCategory] = useState(activeCategory);
+  const [isLoading, setIsLoading] = useState(false);
+  const [displayedProducts, setDisplayedProducts] = useState(sortedProducts);
+
+  if (activeCategory !== prevCategory) {
+    setPrevCategory(activeCategory);
+    setIsLoading(true);
+  }
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [activeCategory]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+      setDisplayedProducts(sortedProducts);
+    }, 350); // Premium snappy 350ms loading delay
+    return () => clearTimeout(timer);
+  }, [activeCategory, sortedProducts]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setDisplayedProducts(sortedProducts);
+    }
+  }, [sortedProducts, isLoading]);
   
   // Get dynamic titles for categories
   const getCategoryTitle = () => {
@@ -92,7 +154,7 @@ export default function CatalogPage({
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Breadcrumb line */}
         <div className="flex items-center gap-1.5 text-xs text-gray-400 font-medium mb-4 select-none">
-          <span className="hover:text-slate-900 cursor-pointer" onClick={() => setActiveCategory("Electronics")}>Home</span>
+          <span className="hover:text-slate-900 cursor-pointer" onClick={() => setActiveCategory("Recommended")}>Home</span>
           <ChevronRight className="w-3.5 h-3.5 text-gray-300" />
           <span className="text-slate-950 font-semibold">{activeCategory}</span>
         </div>
@@ -141,8 +203,8 @@ export default function CatalogPage({
         {/* Content Body: Sidebar + Grid */}
         <div className="flex gap-8 items-start">
           {/* Desktop Filters Sidebar */}
-          <aside className="hidden md:block shrink-0 w-64" id="desktop-filters-sidebar">
-            <div className="sticky top-36 max-h-[calc(100vh-11rem)] overflow-y-auto scrollbar-none bg-white border border-gray-100 rounded-2xl p-5 shadow-[0_4px_24px_rgba(0,0,0,0.01)]">
+          <aside className="hidden md:block shrink-0 w-64 sticky top-24 self-start" id="desktop-filters-sidebar">
+            <div className="max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-none bg-white border border-gray-100 rounded-2xl p-5 shadow-[0_4px_24px_rgba(0,0,0,0.01)]">
               <FiltersSidebar
                 activeCategory={activeCategory}
                 filters={filters}
@@ -154,13 +216,14 @@ export default function CatalogPage({
 
           {/* Products Catalog Display Grid */}
           <div className="flex-1">
-            <AnimatePresence mode="popLayout">
-              {sortedProducts.length === 0 ? (
+            <AnimatePresence mode="wait">
+              {displayedProducts.length === 0 && !isLoading ? (
                 <motion.div
+                  key="empty"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}
-                  className="flex flex-col items-center justify-center py-20 bg-white border border-gray-100 rounded-3xl text-center p-6 shadow-sm"
+                  className="flex flex-col items-center justify-center py-20 bg-white border border-gray-100 rounded-3xl text-center p-6 shadow-sm animate-fade-in"
                   id="catalog-empty-state"
                 >
                   <div className="p-4 bg-slate-50 text-slate-400 rounded-full mb-4">
@@ -181,20 +244,31 @@ export default function CatalogPage({
                 </motion.div>
               ) : (
                 <motion.div
-                  layout
+                  key={activeCategory}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25 }}
                   className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
                   id="catalog-products-grid"
                 >
-                  {sortedProducts.map((product) => (
-                    <ProductCard
-                      key={product.id}
-                      product={product}
-                      onAddToCart={(p: Product, col: string) => onAddToCart(p, col)}
-                      onToggleWishlist={(p: Product) => onToggleWishlist(p)}
-                      isWishlisted={wishlist.some((p) => p.id === product.id)}
-                      onProductClick={(p: Product) => onProductSelect(p)}
-                    />
-                  ))}
+                  {isLoading ? (
+                    Array.from({ length: 6 }).map((_, index) => (
+                      <ProductSkeleton key={`skeleton-${index}`} />
+                    ))
+                  ) : (
+                    displayedProducts.map((product, index) => (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        onAddToCart={(p: Product, col: string) => onAddToCart(p, col)}
+                        onToggleWishlist={(p: Product) => onToggleWishlist(p)}
+                        isWishlisted={wishlist.some((p) => p.id === product.id)}
+                        onProductClick={(p: Product) => onProductSelect(p)}
+                        index={index}
+                      />
+                    ))
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>

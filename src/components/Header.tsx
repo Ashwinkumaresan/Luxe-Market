@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Search, Heart, User, ShoppingBag, Menu, X, Sparkles, ArrowLeft, History, TrendingUp, Star, Tag, Flame, Cpu, Shirt, Home, Dumbbell } from "lucide-react";
+import { Search, Heart, User, ShoppingBag, Menu, X, Sparkles, ArrowLeft, History, TrendingUp, Star, Tag, Flame, Cpu, Shirt, Home, Dumbbell, BookOpen, Utensils } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { CATEGORIES, PRODUCTS } from "../data/products";
 import { UserProfile, Product } from "../types";
@@ -694,6 +694,8 @@ export default function Header({
                         case "Home": return <Home className="w-5 h-5" />;
                         case "Beauty": return <Sparkles className="w-5 h-5 text-pink-500" />;
                         case "Sports": return <Dumbbell className="w-5 h-5" />;
+                        case "Books & Stationery": return <BookOpen className="w-5 h-5 text-emerald-500" />;
+                        case "Kitchen & Dining": return <Utensils className="w-5 h-5 text-amber-500" />;
                         default: return <Star className="w-5 h-5" />;
                       }
                     };

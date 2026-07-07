@@ -10,6 +10,7 @@ interface ProductCardProps {
   onToggleWishlist: (p: Product) => void;
   isWishlisted: boolean;
   onProductClick: (p: Product) => void;
+  index?: number;
 }
 
 export default function ProductCard({
@@ -17,7 +18,8 @@ export default function ProductCard({
   onAddToCart,
   onToggleWishlist,
   isWishlisted,
-  onProductClick
+  onProductClick,
+  index = 0
 }: ProductCardProps) {
   const [isAdding, setIsAdding] = useState(false);
 
@@ -40,11 +42,10 @@ export default function ProductCard({
 
   return (
     <motion.div
-      layout
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.35 }}
+      transition={{ duration: 0.35, delay: Math.min(index * 0.04, 0.24) }}
       onClick={() => onProductClick(product)}
       className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-slate-200 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300 flex flex-col cursor-pointer select-none relative"
       id={`product-card-${product.id}`}
