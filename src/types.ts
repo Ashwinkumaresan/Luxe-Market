@@ -54,6 +54,7 @@ export interface OrderItem {
   quantity: number;
   price: number;
   image: string;
+  details?: string;
 }
 
 export interface Order {
@@ -61,8 +62,21 @@ export interface Order {
   date: string;
   items: OrderItem[];
   total: number;
-  status: 'Processing' | 'Shipped' | 'Delivered';
+  status: 'Processing' | 'Shipped' | 'Delivered' | 'Return Requested';
   trackingNumber: string;
+  tax?: number;
+  shipping?: number;
+  grandTotal?: number;
+  expectedDelivery?: string;
+  carrier?: string;
+  carrierUrl?: string;
+  shippingAddress?: {
+    name: string;
+    line1: string;
+    line2: string;
+    country: string;
+  };
+  paymentMethod?: string;
 }
 
 export interface UserProfile {

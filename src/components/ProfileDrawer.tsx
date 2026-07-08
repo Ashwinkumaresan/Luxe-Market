@@ -7,9 +7,11 @@ interface ProfileDrawerProps {
   onClose: () => void;
   userProfile: UserProfile;
   onSignOut: () => void;
+  onTrackOrdersClick?: () => void;
+  onOrderHistoryClick?: () => void;
 }
 
-export default function ProfileDrawer({ isOpen, onClose, userProfile, onSignOut }: ProfileDrawerProps) {
+export default function ProfileDrawer({ isOpen, onClose, userProfile, onSignOut, onTrackOrdersClick, onOrderHistoryClick }: ProfileDrawerProps) {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -83,7 +85,13 @@ export default function ProfileDrawer({ isOpen, onClose, userProfile, onSignOut 
                   Orders
                 </h3>
                 <div className="space-y-1">
-                  <button className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all text-left group">
+                  <button 
+                    onClick={() => {
+                      if (onTrackOrdersClick) onTrackOrdersClick();
+                      onClose();
+                    }}
+                    className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all text-left group"
+                  >
                     <div className="flex items-center gap-3">
                       <div className="p-2 bg-amber-50 rounded-lg text-amber-600 group-hover:bg-amber-100 transition-colors">
                         <Truck className="w-4 h-4" />
@@ -93,7 +101,13 @@ export default function ProfileDrawer({ isOpen, onClose, userProfile, onSignOut 
                     <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-slate-900 transition-transform group-hover:translate-x-0.5" />
                   </button>
 
-                  <button className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all text-left group">
+                  <button 
+                    onClick={() => {
+                      if (onOrderHistoryClick) onOrderHistoryClick();
+                      onClose();
+                    }}
+                    className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all text-left group"
+                  >
                     <div className="flex items-center gap-3">
                       <div className="p-2 bg-slate-50 rounded-lg text-slate-600 group-hover:bg-slate-100 transition-colors">
                         <History className="w-4 h-4" />

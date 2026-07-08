@@ -19,8 +19,13 @@ import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import CartPage from "./pages/CartPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import OrderHistoryPage from "./pages/OrderHistoryPage";
+import TrackOrderPage from "./pages/TrackOrderPage";
+import TrackOrderDetailPage from "./pages/TrackOrderDetailPage";
+import OrderHistoryDetailPage from "./pages/OrderHistoryDetailPage";
 
 import { WISHLIST_SEED_PRODUCTS } from "./data/wishlistSeed";
+import { SEED_ORDERS } from "./data/orders";
 
 const INITIAL_FILTERS: FilterState = {
   category: "Recommended",
@@ -37,23 +42,7 @@ const DEFAULT_PROFILE: UserProfile = {
   email: "achusuchu123@gmail.com",
   tier: "Gold",
   points: 1250,
-  orderHistory: [
-    {
-      id: "LXM-848301-2026",
-      date: "May 24, 2026",
-      items: [
-        {
-          productName: "Solis Chronos Titanium Smartwatch",
-          quantity: 1,
-          price: 349.00,
-          image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80"
-        }
-      ],
-      total: 392.79,
-      status: "Delivered",
-      trackingNumber: "TRK-983210451"
-    }
-  ]
+  orderHistory: SEED_ORDERS
 };
 
 interface ProductDetailRouteProps {
@@ -546,6 +535,98 @@ export default function App() {
           }
         />
 
+        {/* Order History page */}
+        <Route
+          path="/order-history"
+          element={
+            <OrderHistoryPage
+              userProfile={userProfile}
+              wishlistCount={wishlist.length}
+              cartCount={cart.reduce((sum, item) => sum + item.quantity, 0)}
+              onBackToCatalog={() => navigate("/")}
+              onWishlistClick={() => navigate("/wishlist")}
+              onProfileClick={() => setProfileOpen(true)}
+              onCartClick={() => {
+                if (!userProfile) {
+                  navigate("/signin", { state: { from: "/order-history" } });
+                } else {
+                  navigate("/cart");
+                }
+              }}
+              onProductSelect={(product) => navigate(`/product/${product.id}`)}
+            />
+          }
+        />
+
+        {/* Order History Detail page */}
+        <Route
+          path="/order-history/:orderId"
+          element={
+            <OrderHistoryDetailPage
+              userProfile={userProfile}
+              wishlistCount={wishlist.length}
+              cartCount={cart.reduce((sum, item) => sum + item.quantity, 0)}
+              onBackToCatalog={() => navigate("/")}
+              onWishlistClick={() => navigate("/wishlist")}
+              onProfileClick={() => setProfileOpen(true)}
+              onCartClick={() => {
+                if (!userProfile) {
+                  navigate("/signin", { state: { from: "/order-history" } });
+                } else {
+                  navigate("/cart");
+                }
+              }}
+              onProductSelect={(product) => navigate(`/product/${product.id}`)}
+            />
+          }
+        />
+
+        {/* Track Order page */}
+        <Route
+          path="/track-order"
+          element={
+            <TrackOrderPage
+              userProfile={userProfile}
+              wishlistCount={wishlist.length}
+              cartCount={cart.reduce((sum, item) => sum + item.quantity, 0)}
+              onBackToCatalog={() => navigate("/")}
+              onWishlistClick={() => navigate("/wishlist")}
+              onProfileClick={() => setProfileOpen(true)}
+              onCartClick={() => {
+                if (!userProfile) {
+                  navigate("/signin", { state: { from: "/track-order" } });
+                } else {
+                  navigate("/cart");
+                }
+              }}
+              onProductSelect={(product) => navigate(`/product/${product.id}`)}
+            />
+          }
+        />
+
+        {/* Track Order Details page */}
+        <Route
+          path="/track-order/:orderId"
+          element={
+            <TrackOrderDetailPage
+              userProfile={userProfile}
+              wishlistCount={wishlist.length}
+              cartCount={cart.reduce((sum, item) => sum + item.quantity, 0)}
+              onBackToCatalog={() => navigate("/")}
+              onWishlistClick={() => navigate("/wishlist")}
+              onProfileClick={() => setProfileOpen(true)}
+              onCartClick={() => {
+                if (!userProfile) {
+                  navigate("/signin", { state: { from: "/track-order" } });
+                } else {
+                  navigate("/cart");
+                }
+              }}
+              onProductSelect={(product) => navigate(`/product/${product.id}`)}
+            />
+          }
+        />
+
         {/* Redirect unknown routes */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
@@ -616,6 +697,8 @@ export default function App() {
             setCart([]);
             setWishlist([]);
           }}
+          onTrackOrdersClick={() => navigate("/track-order")}
+          onOrderHistoryClick={() => navigate("/order-history")}
         />
       )}
 
